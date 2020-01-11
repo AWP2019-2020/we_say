@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="polls_area">
+        {%for poll in polls %}
+        <div class="card text-center" style="max-width: 80rem; margin:0 auto; margin-bottom: 3rem">
+            <div class="card-header">
+                {{poll.question}}
+            </div>
+            <div class="card-body">
+                <p>
+                    {{poll.text}}
+                </p>
+
+            {% if user.is_authenticated %}
+                {% if user in poll.votes and
+            <a class="btn btn-success" href="{% url 'vote' poll.pk 1 %}">
+                DA
+            </a>
+            <a class="btn btn-danger" href="{% url 'vote' poll.pk 0 %}">
+                NU
+            </a>
+            {% endif %}
+            </div>
+
+            <div class="card-footer">
+            {{poll.getResults}}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
