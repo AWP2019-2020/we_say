@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}
+  Create poll
+{% endblock%}
+
+{% block content %}
+  <div class="container">
+      <form method="post" class="justify-content-center" enctype="multipart/form-data">
+        {% csrf_token %}
+            <div class="form-group">
+              <label for="id_question">Intrebarea (maxim 100 de caractere)</label>
+              <input type="text" name="question" class="form-control" maxlength="100" required="" id="id_question">
+            </div>
+
+            <div class="form-group">
+              <label for="id_text">O scurta descriere (maxim 2000 de caractere)</label>
+              <textarea class="form-control" rows="3" type="text" name="text" maxlength="2000" required="" id="id_text">
+              </textarea>
+            </div>
+
+           <div class="form-group">
+            <select class="custom-select" name="theme" required="" id="id_theme">
+              {% for theme in themes%}
+                <option value="{{theme.id}}">{{theme.name}}</option>
+              {% endfor %}
+            </select>
+           </div>
+
+           <input class="btn btn-success" type="submit"  value="Create poll" />
+      </form>
+  </div>
+{% endblock %}
