@@ -58,5 +58,17 @@ class LogoutView(LoginRequiredMixin, View):
 
 class VoteView(View):
     def get(self, request, *args, **kwargs):
-        vote = Vote.objects.create(poll_id=kwargs['pk'], option=kwargs['rez'], user=request.user)
+        vote = Vote.objects.filter(poll_id=kwargs['pk'], user=request.user).first()
+        if not vote:
+            vote = Vote.objects.create(poll_id=kwargs['pk'], option=kwargs['rez'], user=request.user)
+        else:
+            vote.option=kwargs['rez']
+            vote.save()
+        return redirect(reverse_lazy('home'))
+
+class CancelVote(View):
+    def get(self, request, *args, **kwargs):
+        vote = Vote.objects.filter(poll_id=kwargs['pk'], user=request.user).first()
+        if vote:
+            vote.delete()
         return redirect(reverse_lazy('home'))

@@ -4,7 +4,7 @@ from app.views import (
     RegisterView,
     LoginView,
     LogoutView,
-    VoteView)
+    VoteView, CancelVote)
 
 urlpatterns = [
     path('', index, name='home'),
@@ -12,4 +12,5 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('poll/<int:pk>/vote/<int:rez>', VoteView.as_view(), name='vote'),
+    path('poll/<int:pk>/vote/cancel', CancelVote.as_view(), name='cancelVote')
 ]

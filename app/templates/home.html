@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load extras %}
 {% block content %}
     <div class="polls_area">
         {%for poll in polls %}
         <div class="card text-center" style="max-width: 80rem; margin:0 auto; margin-bottom: 3rem">
-            <div class="card-header">
+            <div class="card-header" style="background-color: light-blue">
                 {{poll.question}}
             </div>
             <div class="card-body">
@@ -12,13 +13,38 @@
                 </p>
 
             {% if user.is_authenticated %}
-                {% if user in poll.votes and
-            <a class="btn btn-success" href="{% url 'vote' poll.pk 1 %}">
-                DA
-            </a>
-            <a class="btn btn-danger" href="{% url 'vote' poll.pk 0 %}">
-                NU
-            </a>
+                {% if user|get_vote_value:poll == 0 %}
+                    <div class="alert alert-success" style="max-width: 15rem;  margin:0 auto;">
+                        Mulțumim pentru vot!
+                        <button class="btn btn-warning">
+                            Anulează votul
+                        </button>
+                        <p>Schimbă votul: </p>
+                        <a class="btn btn-success" href="{% url 'vote' poll.pk 1 %}">
+                        DA
+                        </a>
+                    </div>
+                {% elif user|get_vote_value:poll == 1 %}
+                    <div class="alert alert-success" style="max-width: 15rem;  margin:0 auto;">
+                        Mulțumim pentru vot!
+                        <a class="btn btn-warning" href="{% url 'cancelVote' poll.pk %}">
+                            Anulează votul
+                        </a>
+                        <p>Schimbă votul: </p>
+                        <a class="btn btn-danger" href="{% url 'vote' poll.pk 0 %}">
+                        NU
+                        </a>
+                    </div>
+                {% else %}
+                    <a class="btn btn-success" href="{% url 'vote' poll.pk 1 %}">
+                        DA
+                    </a>
+
+                    <a class="btn btn-danger" href="{% url 'vote' poll.pk 0 %}">
+                        NU
+                    </a>
+                {% endif %}
+
             {% endif %}
             </div>
 
