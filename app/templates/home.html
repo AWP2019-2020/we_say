@@ -1,10 +1,20 @@
 {% extends 'base.html' %}
 {% load extras %}
 {% block content %}
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sortare după:
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="?sort=1">data</a>
+            <a class="dropdown-item" href="?sort=2">voturi</a>
+        </div>
+    </div>
+
     <div class="polls_area">
         {%for poll in polls %}
-        <div class="card text-center" style="max-width: 80rem; margin:0 auto; margin-bottom: 3rem">
-            <div class="card-header" style="background-color: light-blue">
+        <div id="poll_{{poll.id}}" class="card text-center" style="max-width: 80rem; margin:0 auto; margin-bottom: 3rem">
+            <div class="card-header" style="background-color: #E0FFFF">
                 {{poll.question}}
             </div>
             <div class="card-body">
@@ -16,9 +26,9 @@
                 {% if user|get_vote_value:poll == 0 %}
                     <div class="alert alert-success" style="max-width: 15rem;  margin:0 auto;">
                         Mulțumim pentru vot!
-                        <button class="btn btn-warning">
+                        <a class="btn btn-warning" href="{% url 'cancelVote' poll.pk %}">
                             Anulează votul
-                        </button>
+                        </a>
                         <p>Schimbă votul: </p>
                         <a class="btn btn-success" href="{% url 'vote' poll.pk 1 %}">
                         DA

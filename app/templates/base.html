@@ -21,16 +21,6 @@
   <body>
     {% include 'nav.html' %}
 
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sortare după:
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="?sort=1">data</a>
-            <a class="dropdown-item" href="?sort=2">voturi</a>
-        </div>
-    </div>
-
     {% block content %}
     {% endblock %}
 

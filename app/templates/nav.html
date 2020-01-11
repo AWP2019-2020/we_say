@@ -1,11 +1,7 @@
 <ul class="nav">
-  <li class="nav-item">
-    <a class="nav-link active" href="{% url 'home' %}">We Say</a>
-  </li>
-
   {% if user.is_authenticated %}
     <li class="nav-item">
-      <a class="nav-link active" ">Hello, {{ user.username }}</a>
+      <a class="nav-link active" href="{% url 'userProfile' user.id %}">Hello, {{ user.username }}</a>
     </li>
     {% if user.is_superuser %}
     <li class="nav-item">
@@ -27,13 +23,19 @@
 
     <br>
     <li href="home" class="nav-item">
-        <a class="nav-link active">Home</a>
+        <a class="nav-link active" href="{% url 'home' %}">Home</a>
     </li>
     {% for theme in themes %}
     <li class="nav-item">
-        <a class="nav-link active">{{theme.name}}</a>
+        <a class="nav-link active" href="{% url 'themePage' theme.id %}">{{theme.name}}</a>
     </li>
     {% endfor %}
+
+    {% if user.is_authenticated %}
+    <li>
+         <a class="nav-link active" href="{% url 'createPoll' %}">Create a poll</a>
+    </li>
+    {% endif %}
 </ul>
 
 
